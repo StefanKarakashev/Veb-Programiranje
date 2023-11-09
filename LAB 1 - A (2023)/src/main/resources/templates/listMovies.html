@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Movie Ticket Order page - Welcome and choose a Movie</title>
+    <style type="text/css">
+      body {
+        width: 800px;
+        margin: auto;
+      }
+
+      form {
+        margin: 4%;
+      }
+    </style>
+  </head>
+  <body>
+  <header>
+    <h1>Welcome to our Movie Ticket Shop App</h1>
+  </header>
+  <main>
+    <h2>Choose movie:</h2>
+    <!-- Display radio buttons for each movie,
+            the value should be the movie title
+            and the displayed text should be Title: <movie_title>, Summary:<movie_summary>, Rating: <movie_rating> -->
+
+    <form action="/movie-list" method="post">
+      <h2>Search movies</h2>
+      <label for="movieText">Text</label>
+      <input th:name="textSearch" type="text" id="movieText">
+      <label for="movieRating">Movie Rating</label>
+      <input th:name="movieRating" type="number" id="movieRating" min="1" max="10">
+      <input type="submit" value="Search">
+    </form>
+
+    <ul th:each="movie : ${searchMovies}">
+      <li th:text="'Title: ' + ${movie.getTitle()} + ' Summary: ' + ${movie.getSummary()} + ' Rating: ' + ${movie.getRating()}">
+      </li>
+    </ul>
+
+    </ul>
+    <form action="/movie-list" method="post">
+      <div th:each="movie : ${movies}">
+        <input type="radio" th:id="'radio_' + ${movieStat.index}" th:name="selectedMovie" th:value="${movie.getTitle()}" />
+        <label th:for="'radio_' + ${movieStat.index}" th:text="'Title: ' + ${movie.getTitle()} + ' Summary: ' + ${movie.getSummary()} + ' Rating: ' + ${movie.getRating()}"></label>
+      </div>
+    <h2>Choose number of tickets:</h2>
+    <input type="number" th:name="numTickets" min="1" max="10"><br/>
+    <input type="submit" value="Submit">
+    </form>
+  </main>
+  </body>
+</html>
